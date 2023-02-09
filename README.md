@@ -59,7 +59,36 @@ Copy .env_sample and create .env with your openai api token
 
 
 
-## [How to use any other documentation](https://github.com/arc53/docsgpt/wiki/How-to-train-on-other-documentation)
+## [How to use any other documentation]
+How to train on other documentation
+This AI can use any documentation, but first it needs to be prepared for similarity search.
+
+Start by going to /scripts/ folder
+
+If you open this file you will see that it uses RST files from the folder to create a docs.index and faiss_store.pkl.
+
+It currently uses OPEN_AI to create vector store, so make sure your documentation is not too big. Pandas cost me around 3-4$
+
+You can usually find documentation on github in docs/ folder for most open-source projects.
+
+1. Find documentation in .rst and create a folder with it in your scripts directory
+Name it inputs/ Put all your .rst files in there
+
+If there are no .rst files just convert whatever you find to txt and feed it. (dont forget to change the extension in script)
+
+2. Create .env file in scripts/ folder
+And write your OpenAI API key inside OPENAI_API_KEY=<your-api-key>
+
+3. Run scripts/ingest.py
+python ingest.py
+
+It will tell you how much it will cost
+
+4. Move docs.index and faiss_store.pkl generated in scripts/ to application/ folder.
+5. Run web app
+Once you run it will use new context that is relevant to your documentation Make sure you select default in the dropdown in the UI
+
+
 
 Built with [🦜️🔗 LangChain](https://github.com/hwchase17/langchain)
 
