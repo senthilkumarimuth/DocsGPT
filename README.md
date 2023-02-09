@@ -59,7 +59,7 @@ Copy .env_sample and create .env with your openai api token
 
 
 
-## [How to use any other documentation]
+## How to use any other documentation
 How to train on other documentation
 This AI can use any documentation, but first it needs to be prepared for similarity search.
 
