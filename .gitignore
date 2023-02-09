@@ -133,4 +133,5 @@ dmypy.json
 # macOS
 .DS_Store
 
-application/vectors/
+application/vectorstores/
+scripts/seaborn/
