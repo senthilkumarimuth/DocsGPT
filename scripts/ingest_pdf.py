@@ -22,7 +22,7 @@ for p in ps:
 """
 # pdf to text
 import PyPDF2
-pdfFileObj = open('TVS Jupiter 125 - SMW_removed_removed_removed_removed.pdf', 'rb')
+pdfFileObj = open('PDP document for QA bot.pdf', 'rb')
 pdfReader = PyPDF2.PdfReader(pdfFileObj)
 num_pages = len(pdfReader.pages)
 print(pdfReader.pages)
@@ -44,7 +44,7 @@ for i, d in enumerate(data):
     docs.extend(splits)
     #metadatas.extend([{"source": sources[i]}] * len(splits))
 
-metadatas = [{'source':'TVS OWNERS Manual'}]*len(docs)
+metadatas = [{'source':"Developers’ portal for PDP"}]*len(docs)
 # Here we create a vector store from the documents and save it to disk.
 store = FAISS.from_texts(docs, OpenAIEmbeddings(), metadatas=metadatas)
 faiss.write_index(store.index, "docs.index")
