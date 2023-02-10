@@ -92,30 +92,28 @@ Once you run it will use new context that is relevant to your documentation Make
 
 Built with [🦜️🔗 LangChain](https://github.com/hwchase17/langchain)
 
-##Understanding Langchain
+## Understanding Langchain
 
-What is langchain
+# What is langchain
 
 
 It is used to build apps based on Large Language Models. Large Language Models (LLMs) are a core component of LangChain. LangChain is not a provider of LLMs, but rather provides a standard interface through which you can interact with a variety of LLMs.
 
 
-Flow of langchain:
+# Flow of langchain:
 
 ![Alt text](understanding_langchain.png?raw=true "Flow of langchain")
 
 
-Why Prompt templates?
+# Why Prompt templates?
 
 Normally when you use an LLM in an application, you are not sending user input directly to the LLM. Instead, you are probably taking user input and constructing a prompt, and then sending that to the LLM.
 
 A prompt is the input to a language model. It is a string of text that is used to generate a response from the language model.
 
-What is chain
+# What is chain
 
 A chain in LangChain is made up of links, which can be either primitives like LLMs or other chains.
-
-Large Language Models (LLMs) are a core component of LangChain. LangChain is not a provider of LLMs, but rather provides a standard interface through which you can interact with a variety of LLMs.
 
 Example:
 
@@ -124,8 +122,7 @@ we can construct an LLMChain which takes user input, formats it with a PromptTem
 From langchain.chains importLLMChain
 chain=LLMChain(llm=llm,prompt=prompt)
 
-
-What is Tool?
+# What is Tool?
 
 A tools is a function that performs a specific duty. This can be things like: Google Search, Database lookup, Python REPL, other chains. The interface for a tool is currently a function that is expected to have a string as an input, with a string as an output.
 
