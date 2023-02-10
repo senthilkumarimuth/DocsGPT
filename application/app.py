@@ -36,10 +36,11 @@ def home():
 @app.route("/api/answer", methods=["POST"])
 def api_answer():
     data = request.get_json()
+    print(data)
     question = data["question"]
     api_key = data["api_key"]
     # check if the vectorstore is set
-    if "active_docs" in data:
+    if data['active_docs'] !='Choose documentation':
         vectorstore = "vectorstores/" + data["active_docs"]
 
     else:
@@ -58,7 +59,13 @@ def api_answer():
     # create a chain with the prompt template and the store
     chain = VectorDBQAWithSourcesChain.from_llm(llm=OpenAI(openai_api_key=api_key, temperature=0), vectorstore=store, combine_prompt=c_prompt)
     # fetch the answer
-    result = chain({"question": question})
+    loop= True
+    while loop:
+        try:
+            result = chain({"question": question})
+            loop=False
+        except:
+            print('OPEN AI RATE ERROR')
     print('Sources: ',result['sources'])
 
     # some formatting for the frontend
