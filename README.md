@@ -108,7 +108,7 @@ A prompt is the input to a language model. It is a string of text that is used t
 
 ### What is chain
 
-A chain in LangChain is made up of links, which can be either primitives like LLMs or other chains.
+Using an LLM in isolation is fine for some simple applications, but many more complex ones require chaining LLMs - either with eachother or with other experts. LangChain provides a standard interface for Chains, as well as some common implementations of chains for easy use.
 
 Example:
 
