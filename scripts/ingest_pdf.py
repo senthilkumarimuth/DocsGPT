@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from langchain.text_splitter import CharacterTextSplitter
 import faiss
@@ -5,6 +6,8 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 import pickle
 import dotenv
+import sys
+from pathlib import Path, PurePath
 
 dotenv.load_dotenv()
 
@@ -20,6 +23,8 @@ for p in ps:
         data.append(f.read())
     sources.append(p)
 """
+#enter the document name for which vector to be created
+document_name = str(input('Enter the document name for which vector to be created(keep it short): '))
 # pdf to text
 import PyPDF2
 pdfFileObj = open('PDP document for QA bot_v1.pdf', 'rb')
@@ -48,12 +53,18 @@ for i, d in enumerate(data):
 #metadatas = [{'source':"Developers’ portal for PDP"}]*len(docs)
 metadatas = [{"source":"PDP DOCUMENTATION INDEX"}, {"source":"SUPPORT"},{"source":"API INDEX BY TYPE"},
     {"source":"INTRO TO PDP"},{"source":"How PDP differs from After-market devices?"},
-    {"source":"PDP’s APIs RePEAT"}, {"source":"Quick brief about GraphQL"},{"source":"GraphQL Methods"}, {"source":"Modules"}]
+    {"source":"PDP’s APIs RePEAT"}, {"source":"Quick brief about GraphQL"},{"source":"GraphQL Methods"},
+    {"source":"Modules"}]
 #print(len(docs))
 #print(len(metadatas))
 # Here we create a vector store from the documents and save it to disk.
 store = FAISS.from_texts(docs, OpenAIEmbeddings(), metadatas=metadatas)
-faiss.write_index(store.index, "docs.index")
+# Get the directories for vector store
+root_path = PurePath(Path(__file__).parents[1]).as_posix()
+vector_path = os.path.join(root_path, 'application', 'vectorstores', 'tvs', f'{document_name}')
+os.makedirs(vector_path, exist_ok=True)
+# write docs.index and pkl file
+faiss.write_index(store.index, os.path.join(vector_path,"docs.index"))
 store.index = None
-with open("faiss_store.pkl", "wb") as f:
+with open(os.path.join(vector_path,"faiss_store.pkl"), "wb") as f:
     pickle.dump(store, f)

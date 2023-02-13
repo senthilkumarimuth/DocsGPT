@@ -1,7 +1,5 @@
-import os
 import pickle
 import dotenv
-import datetime
 from flask import Flask, request, render_template
 # os.environ["LANGCHAIN_HANDLER"] = "langchain"
 import faiss
