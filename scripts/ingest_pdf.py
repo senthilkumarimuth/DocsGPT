@@ -1,32 +1,19 @@
 import os
-from pathlib import Path
 from langchain.text_splitter import CharacterTextSplitter
 import faiss
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 import pickle
 import dotenv
-import sys
 from pathlib import Path, PurePath
+import PyPDF2
 
 dotenv.load_dotenv()
 
-"""
-# Here we load in the data in the format that Notion exports it in.
-ps = list(Path("seaborn").glob("**/*.rst"))
-# parse all child directories
-
-data = []
-sources = []
-for p in ps:
-    with open(p, encoding="utf8") as f:
-        data.append(f.read())
-    sources.append(p)
-"""
-#enter the document name for which vector to be created
+# enter the document name for which vector to be created
 document_name = str(input('Enter the document name for which vector to be created(keep it short): '))
 # pdf to text
-import PyPDF2
+
 pdfFileObj = open('PDP document for QA bot_v1.pdf', 'rb')
 pdfReader = PyPDF2.PdfReader(pdfFileObj)
 num_pages = len(pdfReader.pages)
@@ -38,7 +25,8 @@ for page in range(0, num_pages):
     page_text = pageObj.extract_text()
     data.append(page_text)
 pdfFileObj.close()
-data = data[0:15]
+data = data[0:15]  # Number of page for which vector is created
+
 # Here we split the documents, as needed, into smaller chunks.
 # We do this due to the context limits of the LLMs.
 text_splitter = CharacterTextSplitter(chunk_size=1500, separator="\n")
@@ -50,13 +38,11 @@ for i, d in enumerate(data):
     docs.extend(splits)
     #metadatas.extend([{"source": sources[i]}] * len(splits))
 
-#metadatas = [{'source':"Developers’ portal for PDP"}]*len(docs)
 metadatas = [{"source":"PDP DOCUMENTATION INDEX"}, {"source":"SUPPORT"},{"source":"API INDEX BY TYPE"},
     {"source":"INTRO TO PDP"},{"source":"How PDP differs from After-market devices?"},
     {"source":"PDP’s APIs RePEAT"}, {"source":"Quick brief about GraphQL"},{"source":"GraphQL Methods"},
     {"source":"Modules"}]
-#print(len(docs))
-#print(len(metadatas))
+
 # Here we create a vector store from the documents and save it to disk.
 store = FAISS.from_texts(docs, OpenAIEmbeddings(), metadatas=metadatas)
 # Get the directories for vector store
