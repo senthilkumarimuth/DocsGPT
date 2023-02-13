@@ -55,16 +55,19 @@ def api_answer():
     # create a prompt template
     c_prompt = PromptTemplate(input_variables=["summaries", "question"], template=template)
     # create a chain with the prompt template and the store
-    chain = VectorDBQAWithSourcesChain.from_llm(llm=OpenAI(openai_api_key=api_key, temperature=0), vectorstore=store, combine_prompt=c_prompt)
+    chain = VectorDBQAWithSourcesChain.from_llm(llm=OpenAI(openai_api_key=api_key, temperature=0), vectorstore=store,
+                                                combine_prompt=c_prompt)
     # fetch the answer
     loop= True
+    result = None
     while loop:
         try:
             result = chain({"question": question})
+            print('Result: ', result)
             loop=False
         except:
             print('OPEN AI RATE ERROR')
-    print('Sources: ',result['sources'])
+    print('Sources: ', result['sources'])
 
     # some formatting for the frontend
     result['answer'] = result['answer'].replace("\\n", "<br>")

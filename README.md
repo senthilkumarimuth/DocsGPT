@@ -1,7 +1,3 @@
-# Todo:
-
-1. Update docsgpt.drawio in the readme.md
-
 
 <h1 align="center">
   DocsGPT  🦖
@@ -25,6 +21,10 @@ Say goodbye to time-consuming manual searches, and let <strong>DocsGPT</strong> 
   <a href="https://discord.gg/n5BX8dh8rU">![example3](https://img.shields.io/discord/1070046503302877216)</a>
 
 </div>
+
+## Flow of DocGPT
+
+![Alt text](docsgpt.png?raw=true "Flow of DocGPT")
 
 ## Roadmap
 
