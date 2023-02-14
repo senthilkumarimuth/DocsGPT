@@ -60,6 +60,7 @@ def api_answer():
     # fetch the answer
     loop= True
     result = None
+    # setting up loop to avoid rate error by openai
     while loop:
         try:
             result = chain({"question": question})
